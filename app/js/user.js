@@ -24,6 +24,8 @@
       }
 
       var _users = $storage.get('users') || [];
+      var _usersGroups = $storage.get('usersGroups') || {};
+      var _groupsUsers = $storage.get('groupsUsers') || {};
 
       for(var i = 0, iL = _users.length; i < iL; i++) {
         var _user = _users[i];
@@ -33,14 +35,21 @@
         }
       }
 
-      console.log(_groups)
-
       _users.push({
         name: _userName,
-        groups: _groups
       })
 
+      _usersGroups[_userName] = _groups;
+
+      _groups.forEach(function (_group) {
+        _groupsUsers[_group] = _groupsUsers[_group] || [];
+        _groupsUsers[_group].push(_userName);
+      })
+
+
       $storage.set('users', _users);
+      $storage.set('usersGroups', _usersGroups);
+      $storage.set('groupsUsers', _groupsUsers);
 
       $U('#add-new-user').classList.remove('open');
 
@@ -63,19 +72,7 @@
       _deleteButton.addEventListener('click', function (event) {
         var _userName = event.target.getAttribute('data-delete-user');
 
-        var _groups = $storage.get('groups') || [];
-
-        for(var i = 0, iL = _groups.length; i < iL; i++) {
-          var _group = _groups[i];
-          var index;
-
-          if((index = _group.users.indexOf(_userName)) > -1) {
-            _group.users.splice(index, 1);
-          }
-        }
-
-        $storage.set('groups', _groups);
-        renderUsers();
+        deleteUser(_userName)
       })
 
       _li.appendChild(_deleteButton);
@@ -93,6 +90,21 @@
         break;
       }
     }
+
+    var _usersGroups = $storage.get('usersGroups') || {};
+    var _groupsUsers = $storage.get('groupsUsers') || {};
+
+    var groupsAssociated = _usersGroups[userName];
+    delete _usersGroups[userName];
+
+    groupsAssociated.forEach(function (_group) {
+      _groupsUsers[_group].splice(_groupsUsers[_group].indexOf(userName), 1);
+    })
+
+    $storage.set('usersGroups', _usersGroups);
+    $storage.set('groupsUsers', _groupsUsers);
+
+    renderUsers($storage.get('users') || []);
   }
 
   function populateGroups (groups) {
