@@ -80,9 +80,34 @@ html,body {
 
   .modal-container {
     width: 400px;
-    height: 300px;
+    overflow-y: auto;
     margin: 0 auto;
     margin-top: 100px;
     background-color: #fff;
   }
+
+  .modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+  }
+
+  .modal-body {
+    padding: 0px 20px;
+    min-height: 200px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .modal-footer {
+    padding: 10px 20px;
+    min-height: 40px;
+  }
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
 }
