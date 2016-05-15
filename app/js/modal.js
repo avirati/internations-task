@@ -19,6 +19,12 @@
           if(!targetElement.classList.contains('open')) {
             targetElement.classList.add('open');
           }
+
+          targetElement.addEventListener('click', function (event) {
+            if(event.target === targetElement) {
+              targetElement.classList.remove('open');
+            }
+          })
       })
   }
 })(window, document)
