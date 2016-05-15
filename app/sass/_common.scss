@@ -25,7 +25,7 @@ html,body {
 .container {
   width: 100%;
   height: calc(100% - #{$header-height} - #{$footer-height});
-  margin-top: #{$header-height};
+  margin-top: 100px;
 }
 
 .footer {
@@ -118,4 +118,9 @@ input[type="text"] {
   width: 100%;
   border: none;
   border-bottom: 1px solid #ccc;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }

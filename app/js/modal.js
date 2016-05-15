@@ -11,11 +11,10 @@
   //Get all elements with data-modal-target attribute
   var modalTargets = _document.querySelectorAll("*[data-modal-target]");
 
-  for (var  i = 0,
-            iL = modalTargets.length,
-            modalTarget = modalTargets[i],
-            targetElement = _document.getElementById(modalTarget.getAttribute('data-modal-target')); i < iL; i++) {
-      modalTarget.addEventListener('click', function (event) {
+  for (var  i = 0, iL = modalTargets.length; i < iL; i++) {
+      var _modalTarget = modalTargets[i];
+      var targetElement = _document.getElementById(_modalTarget.getAttribute('data-modal-target'));
+      _modalTarget.addEventListener('click', function (event) {
           if(!targetElement.classList.contains('open')) {
             targetElement.classList.add('open');
           }

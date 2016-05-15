@@ -11,4 +11,8 @@
     return _document.querySelector(query);
   }
 
+  _window.toast = function (text) {
+    console.log(text);
+  }
+
 })(window, document)
