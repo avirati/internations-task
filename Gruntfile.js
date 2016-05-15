@@ -13,6 +13,7 @@
                 },
                 dist: {
                     src: [
+                        'app/js/utils.js',
                         'app/js/modal.js',
                         'app/js/storage.js',
                         'app/js/group.js',
