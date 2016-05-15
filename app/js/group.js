@@ -67,6 +67,6 @@
     }
   }
 
-  renderGroups($storage.get('groups'))
+  renderGroups($storage.get('groups') || [])
 
 })(window, document, $, $U, Storage)

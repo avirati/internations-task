@@ -11,15 +11,23 @@
                 options: {
                     separator: ';',
                 },
-                dist: {
+                user: {
                     src: [
                         'app/js/utils.js',
                         'app/js/modal.js',
                         'app/js/storage.js',
-                        'app/js/group.js',
                         'app/js/user.js'
                     ],
-                    dest: 'dist/js/main.js',
+                    dest: 'dist/js/user.main.js',
+                },
+                group: {
+                    src: [
+                        'app/js/utils.js',
+                        'app/js/modal.js',
+                        'app/js/storage.js',
+                        'app/js/group.js'
+                    ],
+                    dest: 'dist/js/group.main.js',
                 },
             },
             sass: { // Task

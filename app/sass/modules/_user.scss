@@ -1,0 +1,23 @@
+ul#user-container {
+  width: calc(100% - 80px);
+  padding: 0px;
+  margin: 0px 40px;
+
+  li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    list-style: none;
+    background-color: #fafafa;
+    color: #555;
+    position: relative;
+
+    .delete-user {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 30px;
+      height: 30px;
+      padding: 0px;
+    }
+  }
+}

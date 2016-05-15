@@ -11,13 +11,29 @@
       <div class="brand-name">User Management System</div>
     </div>
     <div class="container">
-      <button class="btn btn-circle btn-floating">+</button>
+      <ul id="user-container">
+
+      </ul>
+      <button class="btn btn-circle btn-floating" data-modal-target="add-new-user">+</button>
     </div>
     <div class=footer>
       <div class="footer-text">
         Made with ♥ in Mumbai
       </div>
     </div>
-    <script src="../js/main.js" charset="utf-8"></script>
+    <div class="modal" id="add-new-user">
+      <div class="modal-container">
+        <div class="modal-header">
+          Add a User
+        </div>
+        <div class="modal-body">
+          <input type="text" placeholder="Enter user's name" id="user-name"/>
+        </div>
+        <div class="modal-footer">
+          <button class="btn right" id="add-user-btn">Add</button>
+        </div>
+      </div>
+    </div>
+    <script src="../js/user.main.js" charset="utf-8"></script>
   </body>
 </html>
