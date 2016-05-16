@@ -1,8 +1,14 @@
+/**
+ * Handles CRUD operation on User Entity
+ */
 (function (_window, _document, $, $U, $storage) {
   'use strict';
 
+  // Called when a user is added
   $U('#add-user-btn').addEventListener('click', function () {
       var _userName = $U('#user-name').value;
+      // Get all the selected groups for the user
+      // We will associate that User with all these groups
       var _groups = (function() {
         var _groupCheckboxes = _document.getElementsByName("addUserGroupNames[]") || [];
         var _arr = [];
@@ -13,20 +19,24 @@
         return _arr;
       })()
 
+      // Sanitation Check
       if(!_userName) {
         _window.toast("Enter a valid user name");
         return;
       }
 
+      // Sanitation Check
       if(_groups.length === 0) {
         _window.toast("A user must be associated with atleast 1 group");
         return;
       }
 
+      // Get the entities and Maps
       var _users = $storage.get('users') || [];
       var _usersGroups = $storage.get('usersGroups') || {};
       var _groupsUsers = $storage.get('groupsUsers') || {};
 
+      // Check for duplicate user names
       for(var i = 0, iL = _users.length; i < iL; i++) {
         var _user = _users[i];
         if(_user.name === _userName) {
@@ -35,10 +45,12 @@
         }
       }
 
+      // After all checks, add the user
       _users.push({
         name: _userName,
       })
 
+      // Make necessary maps to link users and groups
       _usersGroups[_userName] = _groups;
 
       _groups.forEach(function (_group) {
@@ -47,17 +59,23 @@
       })
 
 
+      // Update localStorage
       $storage.set('users', _users);
       $storage.set('usersGroups', _usersGroups);
       $storage.set('groupsUsers', _groupsUsers);
 
+      // Close the modal
       $U('#add-new-user').classList.remove('open');
 
+      // Render the User List
       renderUsers(_users);
   });
 
+  // Called when a user is updated
   $U('#save-user-btn').addEventListener('click', function () {
       var _userName = $U('#save-user-name').value;
+      // Get all the selected groups for the user
+      // We will associate that User with all these groups
       var _selectedGroups = (function() {
         var _groupCheckboxes = _document.getElementsByName("viewUserGroupNames[]") || [];
         var _arr = [];
@@ -68,20 +86,24 @@
         return _arr;
       })()
 
+      // Sanitation check
       if(!_userName) {
         _window.toast("Enter a valid user name");
         return;
       }
 
+      // Sanitation check
       if(_selectedGroups.length === 0) {
         _window.toast("A user must be associated with atleast 1 group");
         return;
       }
 
+      // Get the entities and Maps
       var groups = $storage.get('groups') || [];
       var _usersGroups = $storage.get('usersGroups') || {};
       var _groupsUsers = $storage.get('groupsUsers') || {};
 
+      // Update maps
       _usersGroups[_userName] = _selectedGroups;
 
       groups.forEach(function (_group) {
@@ -95,12 +117,16 @@
         }
       })
 
+      // Update localStorage
       $storage.set('usersGroups', _usersGroups);
       $storage.set('groupsUsers', _groupsUsers);
 
+      // Close the modal
       $U('#view-user').classList.remove('open');
   });
 
+
+  // Renders the list of Users and attaches event listeners
   function renderUsers (users) {
     var _usersUl = $U('#user-container');
     _usersUl.innerHTML = '';
@@ -132,8 +158,11 @@
     _window.initModals();
   };
 
+  // Called when delete action is performed on User
   function deleteUser (userName) {
     var _users = $storage.get('users');
+
+    // First, remove the user from users array
     for(var i = 0, iL = _users.length; i < iL; i++) {
       var _user = _users[i];
       if(_user.name === userName) {
@@ -144,6 +173,7 @@
       }
     }
 
+    // Next, update the maps
     var _usersGroups = $storage.get('usersGroups') || {};
     var _groupsUsers = $storage.get('groupsUsers') || {};
 
@@ -157,9 +187,11 @@
     $storage.set('usersGroups', _usersGroups);
     $storage.set('groupsUsers', _groupsUsers);
 
+    // Then re render the updated users
     renderUsers($storage.get('users') || []);
   }
 
+  // Used to populate groups in add and view user forms
   function populateGroups (groups, container, groupName) {
     for(var i = 0, iL = groups.length; i < iL; i++) {
       var _groupCheckbox = _document.createElement('input');
@@ -178,6 +210,8 @@
     }
   }
 
+  // Called when someone clicks on a User
+  // Sets the name of the User and updates the group they are in
   function showUser (userName) {
     $U('#save-user-name').value = userName;
     var _groupCheckboxes = _document.getElementsByName("viewUserGroupNames[]") || [];
@@ -190,6 +224,7 @@
     }
   }
 
+  // Initialise the page
   renderUsers($storage.get('users') || []);
   populateGroups($storage.get('groups') || [], '#adduser-group-list', 'addUserGroupNames[]');
   populateGroups($storage.get('groups') || [], '#viewuser-group-list', 'viewUserGroupNames[]');

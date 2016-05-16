@@ -1,3 +1,6 @@
+/**
+ * A simple wrapper around localStorage to serialize and deserialise data
+ */
 (function (_window, $storage) {
   'use strict';
 

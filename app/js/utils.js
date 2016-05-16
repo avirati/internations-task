@@ -11,6 +11,7 @@
     return _document.querySelector(query);
   }
 
+  // Toaster for showing messages
   _window.toast = function (text) {
     console.log(text);
   }
