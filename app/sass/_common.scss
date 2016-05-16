@@ -19,6 +19,11 @@ html,body {
   .brand-name {
     margin: 18px 30px;
     font-size: 20px;
+
+    @media #{$small-and-down} {
+      font-size: 16px;
+      margin: 20px;
+    }
   }
 }
 
@@ -84,6 +89,10 @@ html,body {
     margin: 0 auto;
     margin-top: 100px;
     background-color: #fff;
+
+    @media #{$small-and-down} {
+      width: calc(100% - 20px);
+    }
   }
 
   .modal-header {
@@ -118,6 +127,7 @@ input[type="text"] {
   width: 100%;
   border: none;
   border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
 }
 
 .disabled {
@@ -130,4 +140,8 @@ input[type="text"] {
   margin: 0 auto;
   display: block;
   margin-bottom: 20px;
+
+  @media #{$small-and-down} {
+    width: calc(100% - 80px);
+  }
 }
