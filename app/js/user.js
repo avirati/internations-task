@@ -56,6 +56,63 @@
       renderUsers(_users);
   });
 
+  $U('#save-user-btn').addEventListener('click', function () {
+      var _userName = $U('#save-user-name').value;
+      var _selectedGroups = (function() {
+        var _groupCheckboxes = _document.getElementsByName("viewUserGroupNames[]") || [];
+        var _arr = [];
+        for(var i = 0, iL = _groupCheckboxes.length; i < iL; i++) {
+          if(_groupCheckboxes[i].checked)
+            _arr.push(_groupCheckboxes[i].value);
+        }
+        return _arr;
+      })()
+
+      if(!_userName) {
+        _window.toast("Enter a valid user name");
+        return;
+      }
+
+      if(_selectedGroups.length === 0) {
+        _window.toast("A user must be associated with atleast 1 group");
+        return;
+      }
+
+      var groups = $storage.get('groups') || [];
+      var _usersGroups = $storage.get('usersGroups') || {};
+      var _groupsUsers = $storage.get('groupsUsers') || {};
+
+      // for(var i = 0, iL = _users.length; i < iL; i++) {
+      //   var _user = _users[i];
+      //   if(_user.name === _userName) {
+      //     _window.toast('User already exists');
+      //     return;
+      //   }
+      // }
+      //
+      // _users.push({
+      //   name: _userName,
+      // })
+
+      _usersGroups[_userName] = _selectedGroups;
+
+      groups.forEach(function (_group) {
+        if(_selectedGroups.indexOf(_group.name) > -1) {
+            if(_groupsUsers[_group.name].indexOf(_userName) === -1) {
+              _groupsUsers[_group.name].push(_userName);
+            }
+        }
+        else {
+          _groupsUsers[_group.name].splice(_groupsUsers[_group.name].indexOf(_userName));
+        }
+      })
+
+      $storage.set('usersGroups', _usersGroups);
+      $storage.set('groupsUsers', _groupsUsers);
+
+      $U('#view-user').classList.remove('open');
+  });
+
   function renderUsers (users) {
     var _usersUl = $U('#user-container');
     _usersUl.innerHTML = '';
