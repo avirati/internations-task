@@ -70,6 +70,7 @@
       _deleteButton.innerHTML = '-';
       _deleteButton.setAttribute('data-delete-group', group.name);
       _deleteButton.addEventListener('click', function (event) {
+        event.stopPropagation();
         var _groupName = event.target.getAttribute('data-delete-group');
         if(groupsUsers[group.name].length === 0) {
           deleteGroup(_groupName);
@@ -80,6 +81,7 @@
       })
 
       _li.appendChild(_deleteButton);
+      _window.initModals();
     })
   };
 
@@ -130,6 +132,7 @@
   }
 
   renderGroups($storage.get('groups') || []);
-  populateUsers($storage.get('users') || [])
+  populateUsers($storage.get('users') || []);
+  _window.initModals();
 
 })(window, document, $, $U, Storage)

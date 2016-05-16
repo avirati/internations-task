@@ -8,22 +8,24 @@
 (function (_window, _document) {
   'use strict';
 
-  //Get all elements with data-modal-target attribute
-  var modalTargets = _document.querySelectorAll("*[data-modal-target]");
+  _window.initModals = function () {
+    //Get all elements with data-modal-target attribute
+    var modalTargets = _document.querySelectorAll("*[data-modal-target]");
 
-  for (var  i = 0, iL = modalTargets.length; i < iL; i++) {
-      var _modalTarget = modalTargets[i];
-      var targetElement = _document.getElementById(_modalTarget.getAttribute('data-modal-target'));
-      _modalTarget.addEventListener('click', function (event) {
-          if(!targetElement.classList.contains('open')) {
-            targetElement.classList.add('open');
-          }
-
-          targetElement.addEventListener('click', function (event) {
-            if(event.target === targetElement) {
-              targetElement.classList.remove('open');
+    for (var  i = 0, iL = modalTargets.length; i < iL; i++) {
+        var _modalTarget = modalTargets[i];
+        _modalTarget.addEventListener('click', function (event) {
+            var targetElement = _document.getElementById(event.target.getAttribute('data-modal-target'));
+            if(!targetElement.classList.contains('open')) {
+              targetElement.classList.add('open');
             }
-          })
-      })
+
+            targetElement.addEventListener('click', function (event) {
+              if(event.target === targetElement) {
+                targetElement.classList.remove('open');
+              }
+            })
+        })
+    }
   }
 })(window, document)

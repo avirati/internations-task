@@ -14,18 +14,18 @@
                 user: {
                     src: [
                         'app/js/utils.js',
-                        'app/js/modal.js',
                         'app/js/storage.js',
-                        'app/js/user.js'
+                        'app/js/user.js',
+                        'app/js/modal.js',
                     ],
                     dest: 'dist/js/user.main.js',
                 },
                 group: {
                     src: [
                         'app/js/utils.js',
-                        'app/js/modal.js',
                         'app/js/storage.js',
-                        'app/js/group.js'
+                        'app/js/group.js',
+                        'app/js/modal.js',
                     ],
                     dest: 'dist/js/group.main.js',
                 },
