@@ -125,6 +125,28 @@
       $U('#view-user').classList.remove('open');
   });
 
+  $U('#user-filter').addEventListener('keyup', function (event) {
+    var filterText = this.value;
+
+    var _users = $U('#user-container').children;
+    for(var i = 0, iL = _users.length; i < iL; i++) {
+      var userName = _users[i].getAttribute('data-view-user');
+      if(userName.toLowerCase().indexOf(filterText.toLowerCase()) > -1) {
+        if(filterText.length > 0) {
+          if(!_users[i].classList.contains('highlight')) {
+            _users[i].classList.add('highlight');
+          }
+        }
+        else {
+          _users[i].classList.remove('highlight');
+        }
+      }
+      else {
+        _users[i].classList.remove('highlight');
+      }
+    }
+  });
+
 
   // Renders the list of Users and attaches event listeners
   function renderUsers (users) {

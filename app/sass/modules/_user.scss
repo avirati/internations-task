@@ -11,6 +11,12 @@ ul#user-container {
     color: #555;
     position: relative;
     cursor: pointer;
+    transition: 0.3s;
+
+    &.highlight {
+      background-color: #3199C8;
+      color: #fff;
+    }
 
     .delete-user {
       position: absolute;
