@@ -6,7 +6,7 @@ Sweet Vanilla JS
 
 ### Build
 
-You need Grunt and Compass installed globally:
+You need Grunt installed globally:
 
 ```sh
 $ npm install -g grunt
