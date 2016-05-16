@@ -4,7 +4,7 @@
   $U('#add-group-btn').addEventListener('click', function () {
       var _groupName = $U('#group-name').value;
       var _users = (function() {
-        var _userCheckboxes = _document.getElementsByName("userName[]") || [];
+        var _userCheckboxes = _document.getElementsByName("addGroupUserNames[]") || [];
         var _arr = [];
         for(var i = 0, iL = _userCheckboxes.length; i < iL; i++) {
           if(_userCheckboxes[i].checked)
@@ -60,6 +60,12 @@
     groups.forEach(function (group) {
       var _li = _document.createElement('li');
       _li.innerHTML = group.name;
+      _li.setAttribute('data-modal-target', 'view-group');
+      _li.setAttribute('data-view-group', group.name);
+      _li.addEventListener('click', function (event) {
+        var _groupName = event.target.getAttribute('data-view-group');
+        showGroup(_groupName);
+      })
       _groupsUl.appendChild(_li);
 
       var _deleteButton = _document.createElement('button');
@@ -81,8 +87,8 @@
       })
 
       _li.appendChild(_deleteButton);
-      _window.initModals();
     })
+    _window.initModals();
   };
 
   function deleteGroup (groupName) {
@@ -113,11 +119,11 @@
     renderUsers($storage.get('groups') || []);
   }
 
-  function populateUsers (users) {
+  function populateUsers (users, container, userName) {
     for(var i = 0, iL = users.length; i < iL; i++) {
       var _userCheckbox = _document.createElement('input');
       _userCheckbox.type = "checkbox";
-      _userCheckbox.name = "userName[]";
+      _userCheckbox.name = userName;
       _userCheckbox.value = users[i].name;
 
       var _userLabel = _document.createElement('label');
@@ -127,12 +133,25 @@
       _userContainer.appendChild(_userCheckbox);
       _userContainer.appendChild(_userLabel);
 
-      $U('#user-list').appendChild(_userContainer);
+      $U(container).appendChild(_userContainer);
+    }
+  }
+
+  function showGroup (groupName) {
+    $U('#save-group-name').value = groupName;
+    var _userCheckboxes = _document.getElementsByName("viewGroupUserNames[]") || [];
+
+    var _groupsUsers = $storage.get('groupsUsers');
+    var _associatedUsers = _groupsUsers[groupName];
+
+    for(var i = 0, iL = _userCheckboxes.length; i < iL; i++) {
+      _userCheckboxes[i].checked = _associatedUsers.indexOf(_userCheckboxes[i].value) > -1;
     }
   }
 
   renderGroups($storage.get('groups') || []);
-  populateUsers($storage.get('users') || []);
+  populateUsers($storage.get('users') || [], '#addgroup-user-list', 'addGroupUserNames[]');
+  populateUsers($storage.get('users') || [], '#viewgroup-user-list', 'viewGroupUserNames[]');
   _window.initModals();
 
 })(window, document, $, $U, Storage)
