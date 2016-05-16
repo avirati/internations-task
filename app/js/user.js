@@ -82,18 +82,6 @@
       var _usersGroups = $storage.get('usersGroups') || {};
       var _groupsUsers = $storage.get('groupsUsers') || {};
 
-      // for(var i = 0, iL = _users.length; i < iL; i++) {
-      //   var _user = _users[i];
-      //   if(_user.name === _userName) {
-      //     _window.toast('User already exists');
-      //     return;
-      //   }
-      // }
-      //
-      // _users.push({
-      //   name: _userName,
-      // })
-
       _usersGroups[_userName] = _selectedGroups;
 
       groups.forEach(function (_group) {

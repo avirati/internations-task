@@ -51,6 +51,46 @@
       renderGroups(_groups);
   });
 
+  $U('#save-group-btn').addEventListener('click', function () {
+      var _groupName = $U('#save-group-name').value;
+      var _selectedUsers = (function() {
+        var _userCheckboxes = _document.getElementsByName("viewGroupUserNames[]") || [];
+        var _arr = [];
+        for(var i = 0, iL = _userCheckboxes.length; i < iL; i++) {
+          if(_userCheckboxes[i].checked)
+            _arr.push(_userCheckboxes[i].value);
+        }
+        return _arr;
+      })()
+
+      if(!_groupName) {
+        _window.toast("Enter a valid group name");
+        return;
+      }
+
+      var users = $storage.get('users') || [];
+      var _usersGroups = $storage.get('usersGroups') || {};
+      var _groupsUsers = $storage.get('groupsUsers') || {};
+
+      _groupsUsers[_groupName] = _selectedUsers;
+
+      users.forEach(function (_user) {
+        if(_selectedUsers.indexOf(_user.name) > -1) {
+            if(_usersGroups[_user.name].indexOf(_groupName) === -1) {
+              _usersGroups[_user.name].push(_groupName);
+            }
+        }
+        else {
+          _usersGroups[_user.name].splice(_usersGroups[_user.name].indexOf(_groupName));
+        }
+      })
+
+      $storage.set('usersGroups', _usersGroups);
+      $storage.set('groupsUsers', _groupsUsers);
+
+      $U('#view-group').classList.remove('open');
+  });
+
   function renderGroups (groups) {
     var _groupsUl = $U('#group-container');
     _groupsUl.innerHTML = '';
