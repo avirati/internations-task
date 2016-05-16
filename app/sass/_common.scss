@@ -145,3 +145,21 @@ input[type="text"] {
     width: calc(100% - 80px);
   }
 }
+
+.module-container {
+  list-style: none;
+  padding: 0px;
+  .module {
+    padding: 20px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #ccc;
+
+    a {
+      width: 100%;
+      display: block;
+      line-height: 50px;
+      color: #000;
+      text-decoration: none;
+    }
+  }
+}
