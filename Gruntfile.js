@@ -13,19 +13,19 @@
                 },
                 user: {
                     src: [
+                        'app/js/modal.js',
                         'app/js/utils.js',
                         'app/js/storage.js',
                         'app/js/user.js',
-                        'app/js/modal.js',
                     ],
                     dest: 'dist/js/user.main.js',
                 },
                 group: {
                     src: [
+                        'app/js/modal.js',
                         'app/js/utils.js',
                         'app/js/storage.js',
                         'app/js/group.js',
-                        'app/js/modal.js',
                     ],
                     dest: 'dist/js/group.main.js',
                 },
@@ -59,10 +59,25 @@
                     ],
                 },
             },
+            uglify: {
+                options: {
+                    mangle: true
+                },
+                user: {
+                    files: {
+                        'dist/js/group.min.js': ['dist/js/group.main.js']
+                    }
+                },
+                group: {
+                    files: {
+                        'dist/js/user.min.js': ['dist/js/user.main.js']
+                    }
+                }
+            },
             watch: {
                 scripts: {
                     files: ['app/js/**/*.js'],
-                    tasks: ['concat'],
+                    tasks: ['concat', 'uglify'],
                     options: {
                         spawn: false,
                     },
@@ -85,6 +100,7 @@
         });
 
         grunt.loadNpmTasks('grunt-contrib-concat');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
         grunt.loadNpmTasks('grunt-contrib-sass');
         grunt.loadNpmTasks('grunt-contrib-copy');
         grunt.loadNpmTasks('grunt-contrib-watch');
@@ -101,6 +117,7 @@
             'concat',
             'sass',
             'copy',
+            'uglify',
             'watch'
         ]);
 

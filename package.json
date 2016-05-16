@@ -16,7 +16,5 @@
   "scripts": {
     "test": "grunt test"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }
