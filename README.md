@@ -24,7 +24,8 @@ $ python -m SimpleHTTPServer <PORT>
 ### Run the project
 
 ```sh
-open http://localhost:<PORT>
+open http://localhost:<PORT>/modules/user.html
+open http://localhost:<PORT>/modules/group.html
 ```
 
 License
