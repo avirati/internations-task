@@ -113,6 +113,28 @@
       $U('#view-group').classList.remove('open');
   });
 
+  $U('#group-filter').addEventListener('keyup', function (event) {
+    var filterText = this.value;
+
+    var _groups = $U('#group-container').children;
+    for(var i = 0, iL = _groups.length; i < iL; i++) {
+      var groupName = _groups[i].getAttribute('data-view-group');
+      if(groupName.toLowerCase().indexOf(filterText.toLowerCase()) > -1) {
+        if(filterText.length > 0) {
+          if(!_groups[i].classList.contains('highlight')) {
+            _groups[i].classList.add('highlight');
+          }
+        }
+        else {
+          _groups[i].classList.remove('highlight');
+        }
+      }
+      else {
+        _groups[i].classList.remove('highlight');
+      }
+    }
+  });
+
   // Renders the list of Groups and attaches event listeners
   function renderGroups (groups) {
     var _groupsUl = $U('#group-container');

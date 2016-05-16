@@ -11,6 +11,12 @@ ul#group-container {
     color: #555;
     position: relative;
     cursor: pointer;
+    transition: 0.3s;
+
+    &.highlight {
+      background-color: #3199C8;
+      color: #fff;
+    }
 
     .delete-group {
       position: absolute;
@@ -19,6 +25,7 @@ ul#group-container {
       width: 30px;
       height: 30px;
       padding: 0px;
+      color: #000;
     }
   }
 }
